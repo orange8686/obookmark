@@ -15,11 +15,11 @@
 **文件：**
 - 修改：`D:\Agent\obookmark\manifest.json`
 
-- [ ] **步骤 1：读取并分析 manifest.json**
-- [ ] **步骤 2：添加 default_locale**
+- [x] **步骤 1：读取并分析 manifest.json**
+- [x] **步骤 2：添加 default_locale**
 在根级别添加 `"default_locale": "zh_CN"`。
 
-- [ ] **步骤 3：验证 manifest.json 格式**
+- [x] **步骤 3：验证 manifest.json 格式**
 确保 JSON 格式正确。
 
 ### 任务 2：创建多语言包文件
@@ -28,16 +28,16 @@
 - 创建：`D:\Agent\obookmark\_locales/en/messages.json`
 - 创建：`D:\Agent\obookmark\_locales/zh_CN/messages.json`
 
-- [ ] **步骤 1：创建目录结构**
+- [x] **步骤 1：创建目录结构**
 创建 `_locales/en/` 和 `_locales/zh_CN/` 目录。
 
-- [ ] **步骤 2：编写英文语言包 (en)**
+- [x] **步骤 2：编写英文语言包 (en)**
 包含 `extName`, `extDesc`, `settingsTitle`, `urlLabel`, `usernameLabel`, `passwordLabel`, `saveBtn`, `statusSaving`, `statusSuccess`, `statusError`, `unlockBtn` 的翻译。
 
-- [ ] **步骤 3：编写中文语言包 (zh_CN)**
+- [x] **步骤 3：编写中文语言包 (zh_CN)**
 包含相同的键值对，对应中文翻译。
 
-- [ ] **步骤 4：验证文件内容**
+- [x] **步骤 4：验证文件内容**
 确保 JSON 格式正确且键值对完整。
 
 ### 任务 3：提交变更
@@ -45,10 +45,10 @@
 **文件：**
 - Git 提交
 
-- [ ] **步骤 1：执行 git add**
+- [x] **步骤 1：执行 git add**
 添加所有修改和新创建的文件。
 
-- [ ] **步骤 2：执行 git commit**
+- [x] **步骤 2：执行 git commit**
 使用 `chinese-commit-conventions` 规范进行提交。
 类型：`chore`
 范围：`i18n`
