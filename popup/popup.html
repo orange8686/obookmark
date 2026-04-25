@@ -7,20 +7,23 @@
 </head>
 <body>
   <div class="container">
-    <h1>obookmark Settings</h1>
+    <h1 data-i18n="settingsTitle">obookmark Settings</h1>
     <div class="form-group">
-      <label for="url">WebDAV URL:</label>
-      <input type="text" id="url" placeholder="https://example.com/dav/">
+      <label for="url" data-i18n="urlLabel">WebDAV URL:</label>
+      <input type="text" id="url" data-i18n-placeholder="urlPlaceholder">
     </div>
     <div class="form-group">
-      <label for="username">Username:</label>
+      <label for="username" data-i18n="usernameLabel">Username:</label>
       <input type="text" id="username">
     </div>
     <div class="form-group">
-      <label for="password">Password:</label>
+      <label for="password" data-i18n="passwordLabel">Password:</label>
       <input type="password" id="password">
     </div>
-    <button id="save">Save & Sync Now</button>
+    <div class="actions">
+      <button id="save" data-i18n="saveBtn">Save & Sync Now</button>
+      <button id="unlock" class="secondary" data-i18n="unlockBtn" style="display: none;">Unlock</button>
+    </div>
     <div id="status" class="status"></div>
   </div>
   <script type="module" src="popup.js"></script>

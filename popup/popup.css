@@ -66,6 +66,33 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.actions button {
+  flex: 1;
+  margin-top: 0;
+}
+
+button.secondary {
+  background-color: #6c757d;
+}
+
+button.secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Locked state */
+.locked input {
+  user-select: none;
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+  color: #888;
+}
+
 .status {
   margin-top: 15px;
   padding: 10px;
