@@ -11,6 +11,9 @@
   "urlLabel": {
     "message": "WebDAV URL"
   },
+  "urlPlaceholder": {
+    "message": "https://example.com/dav/"
+  },
   "usernameLabel": {
     "message": "Username"
   },
