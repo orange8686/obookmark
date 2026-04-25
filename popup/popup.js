@@ -127,13 +127,13 @@ syncBtn.addEventListener('click', async () => {
   }
 
   syncBtn.disabled = true;
-  showStatus('statusSaving', 'success'); // Use saving status as a placeholder for "Syncing"
+  showStatus('statusSyncing', 'success');
 
   try {
     const bookmarkTreeNodes = await chrome.bookmarks.getTree();
     const htmlContent = bookmarksToHTML(bookmarkTreeNodes);
     await uploadToWebDAV({ url, username, password }, htmlContent);
-    showStatus('statusSuccess', 'success');
+    showStatus('statusSyncSuccess', 'success');
   } catch (error) {
     console.error('Sync failed:', error);
     showStatus(error.message, 'error', true);
