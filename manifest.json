@@ -3,6 +3,7 @@
   "name": "obookmark",
   "version": "1.0.0",
   "description": "Auto-sync bookmarks to WebDAV as bookmarks.html",
+  "default_locale": "zh_CN",
   "permissions": ["bookmarks", "storage"],
   "action": {
     "default_popup": "popup/popup.html"

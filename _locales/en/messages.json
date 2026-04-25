@@ -1,0 +1,35 @@
+{
+  "extName": {
+    "message": "obookmark"
+  },
+  "extDesc": {
+    "message": "Auto-sync bookmarks to WebDAV as bookmarks.html"
+  },
+  "settingsTitle": {
+    "message": "Settings"
+  },
+  "urlLabel": {
+    "message": "WebDAV URL"
+  },
+  "usernameLabel": {
+    "message": "Username"
+  },
+  "passwordLabel": {
+    "message": "Password"
+  },
+  "saveBtn": {
+    "message": "Save"
+  },
+  "statusSaving": {
+    "message": "Saving..."
+  },
+  "statusSuccess": {
+    "message": "Successfully saved!"
+  },
+  "statusError": {
+    "message": "Error occurred"
+  },
+  "unlockBtn": {
+    "message": "Unlock"
+  }
+}

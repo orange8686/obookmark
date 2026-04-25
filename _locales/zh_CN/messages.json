@@ -1,0 +1,35 @@
+{
+  "extName": {
+    "message": "obookmark"
+  },
+  "extDesc": {
+    "message": "自动同步书签到 WebDAV 为 bookmarks.html"
+  },
+  "settingsTitle": {
+    "message": "设置"
+  },
+  "urlLabel": {
+    "message": "WebDAV 地址"
+  },
+  "usernameLabel": {
+    "message": "用户名"
+  },
+  "passwordLabel": {
+    "message": "密码"
+  },
+  "saveBtn": {
+    "message": "保存"
+  },
+  "statusSaving": {
+    "message": "保存中..."
+  },
+  "statusSuccess": {
+    "message": "保存成功！"
+  },
+  "statusError": {
+    "message": "发生错误"
+  },
+  "unlockBtn": {
+    "message": "解锁"
+  }
+}
