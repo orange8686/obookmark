@@ -5,13 +5,11 @@ import { obfuscate, deobfuscate } from '../lib/crypto.js';
 const urlInput = document.getElementById('url');
 const usernameInput = document.getElementById('username');
 const passwordInput = document.getElementById('password');
-const saveButton = document.getElementById('save');
-const unlockButton = document.getElementById('unlock');
+const saveBtn = document.getElementById('save-btn');
+const syncBtn = document.getElementById('sync-btn');
 const statusDiv = document.getElementById('status');
-const container = document.querySelector('.container');
 
-let isLocked = false;
-let savedCredentials = null;
+let savedConfig = { webdavUrl: '', username: '', password: '' };
 
 // Apply translations
 function applyI18n() {
@@ -36,70 +34,89 @@ function applyI18n() {
   });
 }
 
-function maskValue(str) {
-  if (!str) return '';
-  if (str.length <= 3) return '***';
-  return str.slice(0, 3) + '***';
-}
-
-function lockUI(credentials) {
-  isLocked = true;
-  savedCredentials = credentials;
-  container.classList.add('locked');
-  
-  urlInput.value = credentials.webdavUrl || '';
-  usernameInput.value = maskValue(credentials.username);
-  passwordInput.value = '********';
-  
-  urlInput.disabled = true;
-  usernameInput.disabled = true;
-  passwordInput.disabled = true;
-  
-  unlockButton.style.display = 'block';
-  saveButton.style.display = 'none';
-}
-
-function unlockUI() {
-  isLocked = false;
-  container.classList.remove('locked');
-  
-  if (savedCredentials) {
-    urlInput.value = savedCredentials.webdavUrl || '';
-    usernameInput.value = savedCredentials.username || '';
-    passwordInput.value = savedCredentials.password || '';
-  }
-  
-  urlInput.disabled = false;
-  usernameInput.disabled = false;
-  passwordInput.disabled = false;
-  
-  unlockButton.style.display = 'none';
-  saveButton.style.display = 'block';
-}
-
 function showStatus(messageKey, type, isLiteral = false) {
   const message = isLiteral ? messageKey : chrome.i18n.getMessage(messageKey);
   statusDiv.textContent = message || messageKey;
   statusDiv.className = `status ${type}`;
   statusDiv.style.display = 'block';
+  
+  // Auto hide after 3 seconds if it's a success message
+  if (type === 'success') {
+    setTimeout(() => {
+      statusDiv.style.display = 'none';
+    }, 3000);
+  }
+}
+
+function checkDirty() {
+  const currentUrl = urlInput.value.trim();
+  const currentUsername = usernameInput.value.trim();
+  const currentPassword = passwordInput.value.trim();
+
+  const isChanged = currentUrl !== savedConfig.webdavUrl || 
+                    currentUsername !== savedConfig.username || 
+                    currentPassword !== savedConfig.password;
+  
+  const isNotEmpty = currentUrl !== '' && currentUsername !== '' && currentPassword !== '';
+
+  // Enable save button only if there are changes and all fields are filled
+  if (isChanged && isNotEmpty) {
+    saveBtn.disabled = false;
+  } else {
+    saveBtn.disabled = true;
+  }
 }
 
 // Load saved settings
 chrome.storage.local.get(['webdavUrl', 'username', 'password'], (result) => {
-  if (result.webdavUrl && result.username) {
-    const credentials = {
-      webdavUrl: result.webdavUrl,
-      username: deobfuscate(result.username),
-      password: deobfuscate(result.password)
-    };
-    lockUI(credentials);
-  }
+  savedConfig = {
+    webdavUrl: result.webdavUrl || '',
+    username: deobfuscate(result.username) || '',
+    password: deobfuscate(result.password) || ''
+  };
+
+  urlInput.value = savedConfig.webdavUrl;
+  usernameInput.value = savedConfig.username;
+  passwordInput.value = savedConfig.password;
+
   applyI18n();
+  checkDirty();
 });
 
-unlockButton.addEventListener('click', unlockUI);
+// Event listeners for dirty check
+[urlInput, usernameInput, passwordInput].forEach(input => {
+  input.addEventListener('input', checkDirty);
+});
 
-saveButton.addEventListener('click', async () => {
+// Save button logic: Only save to storage
+saveBtn.addEventListener('click', async () => {
+  const webdavUrl = urlInput.value.trim();
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value.trim();
+
+  saveBtn.disabled = true;
+
+  try {
+    const credentials = {
+      webdavUrl,
+      username: obfuscate(username),
+      password: obfuscate(password)
+    };
+
+    await chrome.storage.local.set(credentials);
+    
+    savedConfig = { webdavUrl, username, password };
+    checkDirty();
+    showStatus('statusSuccess', 'success');
+  } catch (error) {
+    console.error('Save failed:', error);
+    showStatus(error.message, 'error', true);
+    checkDirty(); // Restore button state if it was actually dirty
+  }
+});
+
+// Sync button logic: Direct upload without saving settings
+syncBtn.addEventListener('click', async () => {
   const url = urlInput.value.trim();
   const username = usernameInput.value.trim();
   const password = passwordInput.value.trim();
@@ -109,45 +126,18 @@ saveButton.addEventListener('click', async () => {
     return;
   }
 
-  saveButton.disabled = true;
-  showStatus('statusSaving', 'success');
+  syncBtn.disabled = true;
+  showStatus('statusSaving', 'success'); // Use saving status as a placeholder for "Syncing"
 
   try {
-    const credentials = {
-      webdavUrl: url,
-      username: obfuscate(username),
-      password: obfuscate(password)
-    };
-
-    // 1. Save to storage
-    await new Promise((resolve, reject) => {
-      chrome.storage.local.set(credentials, () => {
-        if (chrome.runtime.lastError) {
-          reject(new Error(chrome.runtime.lastError.message));
-        } else {
-          resolve();
-        }
-      });
-    });
-
-    // 2. Get bookmarks
     const bookmarkTreeNodes = await chrome.bookmarks.getTree();
-    
-    // 3. Convert to HTML
     const htmlContent = bookmarksToHTML(bookmarkTreeNodes);
-    
-    // 4. Upload to WebDAV
     await uploadToWebDAV({ url, username, password }, htmlContent);
-    
     showStatus('statusSuccess', 'success');
-    
-    // Lock after successful save
-    lockUI({ webdavUrl: url, username, password });
-    
   } catch (error) {
-    console.error('Operation failed:', error);
+    console.error('Sync failed:', error);
     showStatus(error.message, 'error', true);
   } finally {
-    saveButton.disabled = false;
+    syncBtn.disabled = false;
   }
 });
