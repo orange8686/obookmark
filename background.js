@@ -1,5 +1,6 @@
 import { bookmarksToHTML } from './lib/parser.js';
 import { uploadToWebDAV } from './lib/webdav.js';
+import { deobfuscate } from './lib/crypto.js';
 
 /**
  * Performs the bookmark sync operation.
@@ -18,8 +19,8 @@ async function performSync() {
       // 3. Upload to WebDAV
       await uploadToWebDAV({
         url: config.webdavUrl,
-        username: config.username,
-        password: config.password
+        username: deobfuscate(config.username),
+        password: deobfuscate(config.password)
       }, htmlContent);
       
     }
