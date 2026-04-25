@@ -9,8 +9,6 @@ async function performSync() {
     const config = await chrome.storage.local.get(['webdavUrl', 'username', 'password']);
     
     if (config.webdavUrl && config.username && config.password) {
-      console.log('Auto-sync: WebDAV configured, starting sync...');
-      
       // 1. Get bookmark tree
       const bookmarkTreeNodes = await chrome.bookmarks.getTree();
       
@@ -24,9 +22,6 @@ async function performSync() {
         password: config.password
       }, htmlContent);
       
-      console.log('Auto-sync: Successful!');
-    } else {
-      console.log('Auto-sync: WebDAV not configured, skipping.');
     }
   } catch (error) {
     console.error('Auto-sync: Failed', error);
@@ -35,6 +30,5 @@ async function performSync() {
 
 // Listen for browser startup
 chrome.runtime.onStartup.addListener(() => {
-  console.log('Extension started: onStartup triggered.');
   performSync();
 });
