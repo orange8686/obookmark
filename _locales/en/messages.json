@@ -35,6 +35,12 @@
   "statusError": {
     "message": "Error occurred"
   },
+  "statusSyncing": {
+    "message": "Syncing bookmarks..."
+  },
+  "statusSyncSuccess": {
+    "message": "Sync successful!"
+  },
   "unlockBtn": {
     "message": "Unlock"
   }

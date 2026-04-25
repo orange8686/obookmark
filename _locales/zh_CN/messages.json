@@ -35,6 +35,12 @@
   "statusError": {
     "message": "发生错误"
   },
+  "statusSyncing": {
+    "message": "正在同步书签..."
+  },
+  "statusSyncSuccess": {
+    "message": "同步完成！"
+  },
   "unlockBtn": {
     "message": "解锁"
   }
