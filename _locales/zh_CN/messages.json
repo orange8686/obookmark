@@ -21,7 +21,10 @@
     "message": "密码"
   },
   "saveBtn": {
-    "message": "保存"
+    "message": "保存设置"
+  },
+  "syncBtn": {
+    "message": "立即同步"
   },
   "statusSaving": {
     "message": "保存中..."

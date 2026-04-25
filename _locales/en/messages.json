@@ -21,7 +21,10 @@
     "message": "Password"
   },
   "saveBtn": {
-    "message": "Save"
+    "message": "Save Settings"
+  },
+  "syncBtn": {
+    "message": "Sync Now"
   },
   "statusSaving": {
     "message": "Saving..."

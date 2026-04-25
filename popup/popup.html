@@ -18,11 +18,11 @@
     </div>
     <div class="form-group">
       <label for="password" data-i18n="passwordLabel">Password:</label>
-      <input type="password" id="password">
+      <input type="password" id="password" oncopy="return false;" oncut="return false;">
     </div>
     <div class="actions">
-      <button id="save" data-i18n="saveBtn">Save & Sync Now</button>
-      <button id="unlock" class="secondary" data-i18n="unlockBtn" style="display: none;">Unlock</button>
+      <button id="save-btn" data-i18n="saveBtn">Save Settings</button>
+      <button id="sync-btn" data-i18n="syncBtn">Sync Now</button>
     </div>
     <div id="status" class="status"></div>
   </div>

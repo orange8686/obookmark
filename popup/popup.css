@@ -1,16 +1,57 @@
+:root {
+  --bg-color: #f9f9f9;
+  --text-color: #333;
+  --label-color: #555;
+  --input-bg: #fff;
+  --input-border: #ddd;
+  --input-focus: #4CAF50;
+  --btn-bg: #4CAF50;
+  --btn-hover: #45a049;
+  --btn-text: #fff;
+  --btn-disabled: #ccc;
+  --status-success-bg: #dff0d8;
+  --status-success-text: #3c763d;
+  --status-success-border: #d6e9c6;
+  --status-error-bg: #f2dede;
+  --status-error-text: #a94442;
+  --status-error-border: #ebccd1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1e1e1e;
+    --text-color: #e0e0e0;
+    --label-color: #bbb;
+    --input-bg: #2d2d2d;
+    --input-border: #444;
+    --input-focus: #4CAF50;
+    --btn-bg: #2e7d32;
+    --btn-hover: #388e3c;
+    --btn-text: #fff;
+    --btn-disabled: #555;
+    --status-success-bg: #1b5e20;
+    --status-success-text: #a5d6a7;
+    --status-success-border: #2e7d32;
+    --status-error-bg: #b71c1c;
+    --status-error-text: #ef9a9a;
+    --status-error-border: #c62828;
+  }
+}
+
 body {
   width: 320px;
   padding: 15px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 14px;
-  background-color: #f9f9f9;
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 h1 {
   font-size: 18px;
   margin-top: 0;
   margin-bottom: 20px;
-  color: #333;
+  color: var(--text-color);
   text-align: center;
 }
 
@@ -27,43 +68,52 @@ label {
   display: block;
   margin-bottom: 5px;
   font-weight: 500;
-  color: #555;
+  color: var(--label-color);
 }
 
 input {
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
-  border: 1px solid #ddd;
+  border: 1px solid var(--input-border);
   border-radius: 4px;
+  background-color: var(--input-bg);
+  color: var(--text-color);
   transition: border-color 0.2s;
 }
 
 input:focus {
   outline: none;
-  border-color: #4CAF50;
+  border-color: var(--input-focus);
 }
 
 button {
   padding: 10px;
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
   margin-top: 10px;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, opacity 0.2s;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: var(--btn-hover);
 }
 
 button:disabled {
-  background-color: #ccc;
+  background-color: var(--btn-disabled);
+  color: #888;
   cursor: not-allowed;
+  opacity: 0.6;
+}
+
+#save-btn:disabled {
+  background-color: var(--btn-disabled);
+  border: 1px dashed #999;
 }
 
 .actions {
@@ -77,20 +127,15 @@ button:disabled {
   margin-top: 0;
 }
 
-button.secondary {
-  background-color: #6c757d;
-}
-
-button.secondary:hover {
-  background-color: #5a6268;
-}
-
-/* Locked state */
-.locked input {
+/* Locked/Disabled state */
+.locked, .disabled {
   user-select: none;
-  background-color: #f0f0f0;
-  cursor: not-allowed;
-  color: #888;
+}
+
+.locked input, .disabled input {
+  background-color: var(--input-border);
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .status {
@@ -104,14 +149,14 @@ button.secondary:hover {
 
 .status.success {
   display: block;
-  background-color: #dff0d8;
-  color: #3c763d;
-  border: 1px solid #d6e9c6;
+  background-color: var(--status-success-bg);
+  color: var(--status-success-text);
+  border: 1px solid var(--status-success-border);
 }
 
 .status.error {
   display: block;
-  background-color: #f2dede;
-  color: #a94442;
-  border: 1px solid #ebccd1;
+  background-color: var(--status-error-bg);
+  color: var(--status-error-text);
+  border: 1px solid var(--status-error-border);
 }
