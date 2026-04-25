@@ -28,8 +28,3 @@ async function performSync() {
     console.error('Auto-sync: Failed', error);
   }
 }
-
-// Listen for browser startup
-chrome.runtime.onStartup.addListener(() => {
-  performSync();
-});
