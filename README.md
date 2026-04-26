@@ -1,4 +1,4 @@
-# obookmark
+# <img src="./icons/icon48.png" width="48" align="absmiddle"> obookmark
 
 一款专为 Microsoft Edge (及 Chromium 内核浏览器) 设计的轻量级书签同步扩展。
 
